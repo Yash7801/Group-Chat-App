@@ -4,17 +4,16 @@ const handleRoomEvent = require("./handlers/roomHandler");
 const { handleMessage, handleTyping } = require("./handlers/messageHandler");
 
 module.exports = function startWS(app) {
-  app.ws("/", (ws, req) => {
+  app.ws("/", (ws) => {
     console.log("Client connected");
 
     ws.on("message", (msg) => {
       try {
-        const data = JSON.parse(msg.toString());
+        const data = JSON.parse(msg);
         console.log("Received:", data);
 
         const { type } = data;
 
-        
         if (type === "init") {
           const { username } = data;
 
@@ -30,13 +29,11 @@ module.exports = function startWS(app) {
 
           ws.username = username;
           addClient(username, ws);
-
           ws.send(JSON.stringify({ type: "init_success", username }));
           console.log(`${username} authenticated`);
           return;
         }
 
-        
         if (!ws.username) {
           ws.send(JSON.stringify({ type: "error", message: "Not authenticated." }));
           return;
@@ -64,5 +61,5 @@ module.exports = function startWS(app) {
     });
   });
 
-  console.log("WebSocket ready to accept connections");
+  console.log("WebSocket ready 🚀");
 };
