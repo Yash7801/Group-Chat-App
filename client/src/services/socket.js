@@ -13,7 +13,7 @@ export const connectSocket = (username, callback) => {
     socket.close();
   }
 
-  socket = new WebSocket("ws://localhost:3001");
+  socket = new WebSocket("wss://group-chat-app-8g8d.onrender.com");
 
   socket.onopen = () => {
     safeSend({
