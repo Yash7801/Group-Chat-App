@@ -6,7 +6,6 @@ module.exports = async function startHTTP() {
 
   app.use(cors());
 
-  // Routes
   require('./routes/chatRoutes')(app);
 
   app.get('/', (req, res) => {

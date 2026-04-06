@@ -53,7 +53,6 @@ export default function ChatWindow({ userId, roomId, initialOnlineUsers = [], on
 
   return (
     <div className="flex-1 flex flex-col bg-gradient-to-b from-[#0f1419] via-[#0a0f18] to-[#050a12] relative">
-      {/* Header */}
       <div className="p-5 border-b border-blue-500/15 bg-gradient-to-r from-blue-600/20 via-blue-500/10 to-transparent backdrop-blur-sm shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-blue-600/20">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="transition-transform duration-300 hover:translate-x-1">
@@ -67,7 +66,6 @@ export default function ChatWindow({ userId, roomId, initialOnlineUsers = [], on
         </div>
       </div>
 
-      {/* Messages Area */}
       <div className="flex-1 overflow-y-auto p-6 space-y-4">
         {messages.length === 0 ? (
           <div className="mx-auto mt-24 max-w-sm rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-600/10 to-indigo-600/5 backdrop-blur p-12 text-center space-y-3">

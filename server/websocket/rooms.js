@@ -1,4 +1,4 @@
-﻿const rooms = new Map(); // roomId -> Set of userIds
+﻿const rooms = new Map();
 
 function joinRoom(roomId, userId) {
   if (!rooms.has(roomId)) {

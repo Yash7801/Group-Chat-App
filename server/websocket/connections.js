@@ -1,4 +1,4 @@
-const clients = new Map(); // username -> ws
+const clients = new Map();
 
 function addClient(username, ws) {
   clients.set(username, ws);

@@ -8,7 +8,6 @@ export default function Sidebar({ userId, onlineUsers = [], activeChannel, onSel
 
   return (
     <aside className="w-72 bg-gradient-to-b from-[#1a1f2e] to-[#0f1419] border-r border-blue-500/10 flex flex-col shadow-2xl">
-      {/* Header */}
       <div className="p-6 border-b border-blue-500/20 bg-gradient-to-br from-blue-600/20 via-blue-500/10 to-transparent backdrop-blur-sm">
         <div className="flex items-center justify-between mb-3">
           <p className="text-xs font-bold text-blue-300/80 uppercase tracking-widest">You</p>
@@ -18,7 +17,6 @@ export default function Sidebar({ userId, onlineUsers = [], activeChannel, onSel
         <p className="mt-3 text-xs text-blue-300/70 font-medium">{onlineUsers.length} member{onlineUsers.length !== 1 ? 's' : ''} online</p>
       </div>
 
-      {/* Channels Section */}
       <div className="flex-1 p-5 space-y-6 overflow-y-auto">
         <div>
           <p className="text-xs font-bold text-gray-300 uppercase tracking-widest mb-3 px-1">Channels</p>
@@ -40,10 +38,8 @@ export default function Sidebar({ userId, onlineUsers = [], activeChannel, onSel
           </div>
         </div>
 
-        {/* Divider */}
         <div className="h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
 
-        {/* Members Section */}
         <div>
           <div className="flex items-center justify-between px-1 mb-3">
             <p className="text-xs font-bold text-gray-300 uppercase tracking-widest">Members</p>
@@ -64,7 +60,6 @@ export default function Sidebar({ userId, onlineUsers = [], activeChannel, onSel
         </div>
       </div>
 
-      {/* Footer */}
       <div className="p-4 border-t border-blue-500/10 bg-gradient-to-r from-blue-600/10 to-transparent text-xs text-gray-500 text-center space-y-1">
         <p className="font-semibold text-gray-400">Press Enter to Send </p>
         <p className="font-semibold text-gray-400">Press Shift + Enter for a new line</p>
