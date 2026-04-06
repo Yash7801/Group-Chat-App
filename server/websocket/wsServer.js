@@ -19,5 +19,5 @@
     }
   });
 
-  console.log("WebSocket ready 🚀");
+  console.log("WebSocket ready on /");
 };
