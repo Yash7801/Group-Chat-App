@@ -1,17 +1,14 @@
 const HyperExpress = require('hyper-express');
 const cors = require('cors');
 
-module.exports = async function startHTTP() {
-  const app = new HyperExpress.Server();
+const app = new HyperExpress.Server();
 
-  app.use(cors());
+app.use(cors());
 
-  require('./routes/chatRoutes')(app);
+require('./routes/chatRoutes')(app);
 
-  app.get('/', (req, res) => {
-    res.send('API running 🚀');
-  });
+app.get('/', (req, res) => {
+  res.send('API running successfully');
+});
 
-  await app.listen(3000);
-  console.log('HTTP server running on 3000');
-};
+module.exports = app;

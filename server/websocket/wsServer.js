@@ -1,29 +1,23 @@
-﻿const WebSocket = require("ws");
+﻿module.exports = function startWS(app) {
+  app.ws("/", {
+    open: (ws) => {
+      console.log("Client connected");
 
-module.exports = function startWS(server) {
-  const wss = new WebSocket.Server({ server }); // 🔥 attach to same server
+      ws.on("message", (msg) => {
+        try {
+          const data = JSON.parse(msg.toString());
+          console.log("Received:", data);
 
-  function broadcastAll(payload) {
-    wss.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(JSON.stringify(payload));
-      }
-    });
-  }
+        } catch (err) {
+          console.error("Invalid message");
+        }
+      });
 
-  wss.on("connection", (ws) => {
-    console.log("Client connected");
-
-    ws.on("message", (msg) => {
-      const data = JSON.parse(msg);
-
-      // (your existing logic stays SAME)
-    });
-
-    ws.on("close", () => {
-      console.log("Client disconnected");
-    });
+      ws.on("close", () => {
+        console.log("Client disconnected");
+      });
+    }
   });
 
-  console.log("WebSocket attached to server ");
+  console.log("WebSocket ready 🚀");
 };

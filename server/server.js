@@ -1,14 +1,11 @@
-const http = require("http");
 const app = require("./app");
-const initWS = require("./websocket/wsServer");
+const startWS = require("./websocket/wsServer");
 
-const server = http.createServer(app);
+const PORT = process.env.PORT || 10000;
 
-// attach websocket to SAME server
-initWS(server);
 
-const PORT = process.env.PORT || 5000;
+startWS(app);
 
-server.listen(PORT, () => {
+app.listen(PORT).then(() => {
   console.log("Server running on port", PORT);
 });
