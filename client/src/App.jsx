@@ -37,13 +37,17 @@ function App() {
   if (!username) {
     return (
       <div className="h-screen flex items-center justify-center bg-gradient-to-br from-[#0f1419] to-[#111827] text-white">
-        <div className="w-full max-w-sm p-7 bg-[#1a1f2e] border border-gray-700 rounded-xl shadow-lg">
+        
+        <div className="w-full max-w-sm p-7 bg-[#1a1f2e] border border-gray-700 rounded-xl shadow-lg relative animate-fadeIn">
           
+          {/* subtle edge highlight */}
+          <div className="absolute inset-0 rounded-xl pointer-events-none border border-white/5"></div>
+
           <h1 className="text-2xl font-semibold mb-2 tracking-tight">
             Chat
           </h1>
 
-          <p className="text-sm text-gray-400 mb-4">
+          <p className="text-sm text-gray-400 mb-4 leading-relaxed">
             Enter your username to continue
           </p>
 
@@ -62,7 +66,7 @@ function App() {
               if (e.key === "Enter") handleJoin();
             }}
             placeholder="Username"
-            className="w-full px-3 py-2.5 rounded-md bg-[#0c111b] border border-gray-600/80 focus:border-blue-500 text-white outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500 placeholder-gray-500"
+            className="w-full px-3 py-2.5 rounded-md bg-[#0c111b] border border-gray-600/80 text-white outline-none transition placeholder:text-gray-500 hover:border-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           />
 
           {error && (
@@ -72,7 +76,7 @@ function App() {
           <button
             onClick={handleJoin}
             disabled={isConnecting}
-            className="mt-5 w-full py-2.5 rounded-md bg-blue-600 hover:bg-blue-500 transition disabled:opacity-50 font-medium"
+            className="mt-5 w-full py-2.5 rounded-md bg-blue-600 hover:bg-blue-500 active:bg-blue-700 transition disabled:opacity-50 font-medium shadow-md hover:shadow-blue-500/20"
           >
             {isConnecting ? "Connecting..." : "Join Chat"}
           </button>
@@ -84,7 +88,7 @@ function App() {
   // CHAT SCREEN
   return (
     <div className="h-screen bg-gradient-to-br from-[#0f1419] to-[#111827] text-white flex items-center justify-center p-3">
-      <div className="w-full max-w-6xl h-full border border-gray-700 bg-[#111] rounded-xl shadow-lg overflow-hidden">
+      <div className="w-full max-w-6xl h-full border border-gray-700 bg-[#111] rounded-xl shadow-lg overflow-hidden animate-fadeIn">
         
         <Chat 
           userId={username} 
