@@ -7,29 +7,30 @@ export default function Sidebar({ userId, onlineUsers = [], activeChannel, onSel
   const otherUsers = onlineUsers.filter((user) => user !== userId);
 
   return (
-    <aside className="w-72 bg-gradient-to-b from-[#1a1f2e] to-[#0f1419] border-r border-blue-500/10 flex flex-col shadow-2xl">
-      <div className="p-6 border-b border-blue-500/20 bg-gradient-to-br from-blue-600/20 via-blue-500/10 to-transparent backdrop-blur-sm">
-        <div className="flex items-center justify-between mb-3">
-          <p className="text-xs font-bold text-blue-300/80 uppercase tracking-widest">You</p>
-          <span className="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-        </div>
-        <p className="text-lg font-bold text-white truncate">{userId}</p>
-        <p className="mt-3 text-xs text-blue-300/70 font-medium">{onlineUsers.length} member{onlineUsers.length !== 1 ? 's' : ''} online</p>
+    <aside className="w-full h-full bg-[#0b121f] flex flex-col">
+      <div className="p-6 border-b border-white/10">
+        <div className="text-xs uppercase tracking-[0.35em] text-blue-300/70">QuickChat</div>
+        <h2 className="mt-4 text-2xl font-semibold text-white">Live Rooms</h2>
+        <p className="mt-2 text-sm text-gray-400">Choose a channel and jump into the conversation.</p>
       </div>
 
-      <div className="flex-1 p-5 space-y-6 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto p-5 space-y-6">
         <div>
-          <p className="text-xs font-bold text-gray-300 uppercase tracking-widest mb-3 px-1">Channels</p>
-          <div className="space-y-2">
+          <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-gray-500 mb-3">
+            <span>Rooms</span>
+            <span>{otherUsers.length + 1}</span>
+          </div>
+
+          <div className="space-y-3">
             {channels.map((channel) => (
               <button
                 key={channel.id}
                 type="button"
                 onClick={() => onSelectChannel(channel.id)}
-                className={`w-full rounded-lg px-3.5 py-2.5 text-left text-sm font-medium transition-all duration-300 transform ${
+                className={`w-full rounded-3xl px-4 py-3 text-left text-sm font-medium transition duration-300 ${
                   activeChannel === channel.id
-                    ? "bg-gradient-to-r from-blue-600/50 to-blue-500/30 text-blue-100 border border-blue-400/40 shadow-lg shadow-blue-600/20 scale-105"
-                    : "text-gray-400 hover:text-gray-300 hover:bg-white/8 border border-transparent hover:border-blue-500/30 hover:scale-102"
+                    ? "bg-gradient-to-r from-blue-500 to-violet-500 text-white shadow-lg shadow-violet-500/20"
+                    : "bg-white/5 text-gray-300 hover:bg-white/10"
                 }`}
               >
                 {channel.label}
@@ -38,21 +39,22 @@ export default function Sidebar({ userId, onlineUsers = [], activeChannel, onSel
           </div>
         </div>
 
-        <div className="h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
-
-        <div>
-          <div className="flex items-center justify-between px-1 mb-3">
-            <p className="text-xs font-bold text-gray-300 uppercase tracking-widest">Members</p>
-            <span className="text-xs font-semibold text-blue-300 bg-blue-500/20 px-2.5 py-1 rounded-full">{otherUsers.length}</span>
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
+          <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-gray-500 mb-4">
+            <span>Members</span>
+            <span>{otherUsers.length}</span>
           </div>
-          <div className="space-y-2">
+
+          <div className="space-y-3">
             {otherUsers.length === 0 ? (
-              <p className="text-sm text-gray-500 italic px-1">Waiting for others...</p>
+              <p className="text-sm text-gray-400 italic">Waiting for others...</p>
             ) : (
               otherUsers.map((user) => (
-                <div key={user} className="rounded-lg bg-gradient-to-r from-blue-600/30 to-blue-500/10 border border-blue-400/20 px-3.5 py-2.5 text-sm text-blue-100 font-medium hover:from-blue-600/50 hover:to-blue-500/30 transition-all duration-300 transform hover:scale-102 hover:shadow-lg hover:shadow-blue-600/20 cursor-pointer">
-                  <span className="inline-block w-2 h-2 rounded-full bg-green-300 mr-2 animate-pulse"></span>
-                  {user}
+                <div key={user} className="flex items-center gap-3 rounded-3xl bg-[#0c1117] px-4 py-3 text-sm text-gray-200">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-500/20 text-xs font-semibold text-white">
+                    {user[0]?.toUpperCase()}
+                  </div>
+                  <span className="truncate">{user}</span>
                 </div>
               ))
             )}
@@ -60,9 +62,8 @@ export default function Sidebar({ userId, onlineUsers = [], activeChannel, onSel
         </div>
       </div>
 
-      <div className="p-4 border-t border-blue-500/10 bg-gradient-to-r from-blue-600/10 to-transparent text-xs text-gray-500 text-center space-y-1">
-        <p className="font-semibold text-gray-400">Press Enter to Send </p>
-        <p className="font-semibold text-gray-400">Press Shift + Enter for a new line</p>
+      <div className="border-t border-white/10 p-5 text-xs text-gray-400">
+        Press Enter to send • Shift + Enter for a new line.
       </div>
     </aside>
   );
