@@ -4,11 +4,16 @@ import MessageInput from "./MessageInput";
 import { onSocketMessage } from "../services/socket";
 
 const channelTitles = {
-  general: "# General Chat",
-  "dev-talk": "# Dev Talk",
+  general: "General",
+  "dev-talk": "Dev Talk",
 };
 
-export default function ChatWindow({ userId, roomId, initialOnlineUsers = [], onOnlineUsersChange }) {
+export default function ChatWindow({
+  userId,
+  roomId,
+  initialOnlineUsers = [],
+  onOnlineUsersChange,
+}) {
   const [messages, setMessages] = useState([]);
   const [typingUsers, setTypingUsers] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState(initialOnlineUsers);
@@ -28,14 +33,16 @@ export default function ChatWindow({ userId, roomId, initialOnlineUsers = [], on
         setMessages(data.messages);
       }
 
-      if (data.type === "typing_start" && data.userId !== userId) {
+      if (data.type === "start" && data.userId !== userId) {
         setTypingUsers((prev) =>
           prev.includes(data.userId) ? prev : [...prev, data.userId]
         );
       }
 
-      if (data.type === "typing_stop") {
-        setTypingUsers((prev) => prev.filter((id) => id !== data.userId));
+      if (data.type === "stop") {
+        setTypingUsers((prev) =>
+          prev.filter((id) => id !== data.userId)
+        );
       }
 
       if (data.type === "online_users") {
@@ -52,26 +59,34 @@ export default function ChatWindow({ userId, roomId, initialOnlineUsers = [], on
   }, [messages, typingUsers]);
 
   return (
-    <div className="flex-1 flex flex-col bg-gradient-to-b from-[#0f1419] via-[#0a0f18] to-[#050a12] relative">
-      <div className="p-5 border-b border-blue-500/15 bg-gradient-to-r from-blue-600/20 via-blue-500/10 to-transparent backdrop-blur-sm shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-blue-600/20">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="transition-transform duration-300 hover:translate-x-1">
-            <h2 className="text-2xl font-bold text-white">{channelTitles[roomId] || "# General"}</h2>
-            <p className="text-xs text-blue-300/60 mt-1">Team discussion</p>
-          </div>
-          <div className="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-blue-600/30 to-blue-500/20 px-4 py-2.5 text-sm font-semibold text-blue-100 border border-blue-400/30 shadow-lg shadow-blue-600/20 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-600/40 hover:from-blue-600/40 hover:to-blue-500/30 transform hover:scale-105 cursor-pointer">
-            <span className="h-2.5 w-2.5 rounded-full bg-green-400 animate-pulse" />
+    <div className="flex-1 flex flex-col bg-[#0f1419]/40">
+      
+      {/* ========= HEADERS ========= */}
+      <div className="h-[70px] px-6 flex items-center justify-between border-b border-white/5 bg-[#0f1419]/80 backdrop-blur">
+        
+        <div>
+          <h2 className="text-lg font-semibold">
+            # {channelTitles[roomId] || "General"}
+          </h2>
+          <p className="text-xs text-gray-400">
             {onlineUsers.length} online
-          </div>
+          </p>
+        </div>
+
+        <div className="text-xs text-gray-400">
+          chatting as <span className="text-white">{userId}</span>
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-6 space-y-4">
+      {/* -=-=-=-=-= message -=-=-=-=-= */}
+      <div className="flex-1 overflow-y-auto px-6 py-5 space-y-3">
+        
         {messages.length === 0 ? (
-          <div className="mx-auto mt-24 max-w-sm rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-600/10 to-indigo-600/5 backdrop-blur p-12 text-center space-y-3">
-            <div className="text-4xl mb-2">💬</div>
-            <p className="text-gray-300 font-semibold text-lg">Start a conversation</p>
-            <p className="text-sm text-gray-400">Say hello to begin chatting with others in this channel</p>
+          <div className="mt-24 text-center text-gray-400">
+            <p className="text-sm">No messages yet.</p>
+            <p className="text-xs mt-1">
+              You might as well break the silence.
+            </p>
           </div>
         ) : (
           messages.map((msg, i) => (
@@ -85,21 +100,21 @@ export default function ChatWindow({ userId, roomId, initialOnlineUsers = [], on
           ))
         )}
 
+        {/* =-=-=-=-=-= typing .... -=-=-=-= */}
         {typingUsers.length > 0 && (
-          <div className="text-sm text-gray-400 italic font-medium">
-            {typingUsers.join(", ")} {typingUsers.length === 1 ? "is" : "are"} typing
-            <span className="ml-1 inline-block">
-              <span className="animate-bounce inline-block">.</span>
-              <span className="animate-bounce inline-block" style={{ animationDelay: "0.1s" }}>.</span>
-              <span className="animate-bounce inline-block" style={{ animationDelay: "0.2s" }}>.</span>
-            </span>
+          <div className="text-xs text-gray-500 italic">
+            {typingUsers.join(", ")}{" "}
+            {typingUsers.length === 1 ? "is" : "are"} typing...
           </div>
         )}
 
         <div ref={messagesEndRef} />
       </div>
 
-      <MessageInput />
+      {/* ========= INPUT ========= */}
+      <div className="border-t border-white/5 bg-[#0f1419]/70 backdrop-blur">
+        <MessageInput />
+      </div>
     </div>
   );
 }

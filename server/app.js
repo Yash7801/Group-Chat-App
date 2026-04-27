@@ -3,7 +3,9 @@ const cors = require('cors');
 
 const app = new HyperExpress.Server();
 
-app.use(cors());
+app.use(cors({
+  origin:'https://group-chat-app-seven.vercel.app/'
+}));
 
 require('./routes/chatRoutes')(app);
 

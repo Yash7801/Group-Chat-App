@@ -11,19 +11,19 @@ export default function MessageInput() {
 
     sendMessage(trimmed);
     setMessage("");
-    sendTyping("typing_stop");
+    sendTyping("stop");
   };
 
   const handleChange = (e) => {
     setMessage(e.target.value);
-    sendTyping("typing_start");
+    sendTyping("start");
 
     if (typingTimeout.current) {
       clearTimeout(typingTimeout.current);
     }
 
     typingTimeout.current = setTimeout(() => {
-      sendTyping("typing_stop");
+      sendTyping("stop");
     }, 900);
   };
 
@@ -35,28 +35,40 @@ export default function MessageInput() {
   };
 
   return (
-    <div className="p-5 border-t border-blue-500/15 bg-gradient-to-t from-[#0a0f18] to-[#0f1419] backdrop-blur flex items-center gap-3">
-      <textarea
-        value={message}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        rows={1}
-        className="flex-1 min-h-[48px] resize-none rounded-xl border border-blue-500/40 bg-white/5 backdrop-blur px-4 py-3 text-sm text-white outline-none placeholder:text-gray-500 transition-all duration-300 focus:border-blue-400 focus:ring-2 focus:ring-blue-500/30 focus:bg-white/15 hover:border-blue-400/60 hover:bg-white/8 shadow-sm hover:shadow-md"
-        placeholder="Type a message..."
-      />
+    <div className="px-5 py-4 border-t border-white/5 bg-[#0f1419]/80 backdrop-blur">
+      
+      <div className="flex items-end gap-3">
+        
+        {/* Input */}
+        <textarea
+          value={message}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          rows={1}
+          placeholder="Message..."
+          className="flex-1 resize-none rounded-lg bg-white/5 px-4 py-3 text-sm text-white placeholder:text-gray-500 outline-none border border-white/10 focus:border-white/20 focus:bg-white/10 transition"
+        />
 
-      <button
-        type="button"
-        onClick={handleSend}
-        disabled={!message.trim()}
-        className={`rounded-xl px-5 py-3 text-sm font-bold uppercase tracking-wider transition-all duration-300 shadow-md transform ${
-          message.trim()
-            ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:from-blue-500 hover:to-blue-400 hover:shadow-xl hover:shadow-blue-600/60 border border-blue-400/40 active:scale-95 hover:scale-105 active:shadow-md"
-            : "bg-gradient-to-r from-blue-900/40 to-blue-800/30 text-gray-500 cursor-not-allowed border border-blue-500/10"
-        }`}
-      >
-        Send
-      </button>
+        {/* Send Button */}
+        <button
+          type="button"
+          onClick={handleSend}
+          disabled={!message.trim()}
+          className={`
+            px-4 py-2.5 rounded-lg text-sm font-medium transition
+            ${message.trim()
+              ? "bg-blue-600 text-white hover:bg-blue-500"
+              : "bg-white/5 text-gray-500 cursor-not-allowed"}
+          `}
+        >
+          Send
+        </button>
+      </div>
+
+      {/* Hint */}
+      <div className="mt-2 text-[11px] text-gray-500">
+        Press Enter to send • Shift + Enter for new line
+      </div>
     </div>
   );
 }

@@ -33,26 +33,36 @@ function App() {
     });
   };
 
+  // =-=-=-=-=-=-=-=-=-=-=-= LOGIN SCREEN  -=-=-=-=-=-=-=-=-=-=-=-
   if (!username) {
     return (
       <div className="h-screen flex items-center justify-center bg-[#0f1419] text-white relative overflow-hidden">
+        
+        {/* Background Glow effect idhr ko dala*/}
         <div className="absolute inset-0 select-none pointer-events-none">
           <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
           <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl"></div>
         </div>
 
+        {/* Card idhr ko bne */}
         <div className="relative z-10 bg-gradient-to-br from-[#1a1f2e] via-[#1a1f2e] to-[#0f1419] border border-blue-400/20 shadow-2xl shadow-blue-500/10 p-8 rounded-2xl w-full max-w-md backdrop-blur">
+          
           <div className="space-y-1 mb-8">
             <h1 className="text-4xl font-bold tracking-tight">
-              <span className="bg-gradient-to-r from-blue-400 via-blue-300 to-cyan-300 bg-clip-text text-transparent">Chat</span>
+              <span className="bg-gradient-to-r from-blue-400 via-blue-300 to-cyan-300 bg-clip-text text-transparent">
+                Chat
+              </span>
               <span className="text-white">App</span>
             </h1>
-            <p className="text-sm text-blue-300/60 font-medium">Real-time messaging platform</p>
+            <p className="text-sm text-blue-300/60 font-medium">
+              Real-time messaging platform
+            </p>
           </div>
 
           <label className="block mb-3 text-sm font-semibold text-gray-200">
             Username
           </label>
+
           <input
             autoFocus
             value={input}
@@ -97,7 +107,29 @@ function App() {
     );
   }
 
-  return <Chat userId={username} initialOnlineUsers={initialOnlineUsers} />;
+  // -=-=-=-=-=-=-=-= CHAT LAYOUT Update kra idhr -=-=-=-=-=-=-=-=-=-=-=-
+  return (
+    <div className="h-screen bg-[#0f1419] text-white relative overflow-hidden">
+      
+      {/* Background Glow */}
+      <div className="absolute inset-0 select-none pointer-events-none">
+        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-1/4 right-1/3 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px]"></div>
+      </div>
+
+      {/* Glass Container */}
+      <div className="relative z-10 h-full flex items-center justify-center p-4">
+        <div className="w-full h-full max-w-[1400px] rounded-3xl border border-blue-400/20 bg-white/5 backdrop-blur-xl shadow-2xl shadow-blue-500/10 flex overflow-hidden">
+          
+          <Chat 
+            userId={username} 
+            initialOnlineUsers={initialOnlineUsers} 
+          />
+
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default App;

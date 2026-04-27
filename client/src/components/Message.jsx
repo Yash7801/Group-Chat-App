@@ -8,23 +8,50 @@
 
 export default function Message({ text, sender, isOwn, timestamp }) {
   return (
-    <div className={`flex ${isOwn ? "justify-end" : "justify-start"} group`}>
-      <div className={`max-w-[75%] rounded-2xl px-5 py-3 shadow-md transition-all duration-300 backdrop-blur transform hover:scale-105 ${
-        isOwn 
-          ? "bg-gradient-to-br from-blue-600/60 to-blue-500/40 text-white border border-blue-400/40 hover:shadow-xl hover:shadow-blue-600/40" 
-          : "bg-gradient-to-br from-white/10 to-white/5 text-gray-100 border border-white/15 hover:border-white/30 hover:bg-gradient-to-br hover:from-white/20 hover:to-white/15 hover:shadow-lg hover:shadow-white/5"
-      }`}>
+    <div className={`flex ${isOwn ? "justify-end" : "justify-start"}`}>
+      
+      {/* Wrapper */}
+      <div className="flex items-end gap-2 max-w-[70%]">
+        
+        {/* Avatar bs dussro ka */}
         {!isOwn && (
-          <p className="text-xs font-bold text-blue-200 mb-2 uppercase tracking-wider">{sender}</p>
+          <div className="w-8 h-8 rounded-full bg-indigo-500/30 flex items-center justify-center text-xs font-semibold text-white shrink-0">
+            {sender?.[0]?.toUpperCase()}
+          </div>
         )}
-        <p className="whitespace-pre-wrap break-words text-sm leading-6 font-medium">{text}</p>
-        {timestamp && (
-          <p className={`mt-2 text-xs font-medium transition-all duration-300 ${
-            isOwn ? "text-blue-200/60 text-right group-hover:text-blue-200" : "text-gray-500 group-hover:text-gray-300"
-          }`}>
-            {formatTime(timestamp)}
+
+        {/* Message - Bubble - UI */}
+        <div
+          className={`
+            px-4 py-2.5 rounded-2xl text-sm leading-relaxed
+            ${isOwn
+              ? "bg-blue-600 text-white rounded-br-md"
+              : "bg-white/10 text-gray-100 rounded-bl-md"}
+          `}
+        >
+          {/* Sender bs dusro ke liy */}
+          {!isOwn && (
+            <div className="text-xs text-gray-400 mb-1 font-medium">
+              {sender}
+            </div>
+          )}
+
+          {/* Message contents */}
+          <p className="whitespace-pre-wrap break-words">
+            {text}
           </p>
-        )}
+
+          {/* Time-stamp */}
+          {timestamp && (
+            <div
+              className={`text-[10px] mt-1 ${
+                isOwn ? "text-blue-200/70 text-right" : "text-gray-400"
+              }`}
+            >
+              {formatTime(timestamp)}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

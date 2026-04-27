@@ -17,7 +17,7 @@ export const connectSocket = (username, callback) => {
 
   socket.onopen = () => {
     safeSend({
-      type: "init",
+      type: "inside",
       username,
     });
   };

@@ -14,7 +14,7 @@ module.exports = function startWS(app) {
 
         const { type } = data;
 
-        if (type === "init") {
+        if (type === "inside") {
           const { username } = data;
 
           if (!username || !/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
@@ -43,7 +43,7 @@ module.exports = function startWS(app) {
           handleRoomEvent(ws, data);
         } else if (type === "message") {
           handleMessage({ ...data, userId: ws.username });
-        } else if (type === "typing_start" || type === "typing_stop") {
+        } else if (type === "start" || type === "stop") {
           handleTyping({ ...data, userId: ws.username });
         }
 
@@ -61,5 +61,5 @@ module.exports = function startWS(app) {
     });
   });
 
-  console.log("WebSocket ready 🚀");
+  console.log("WebSocket ready ");
 };
