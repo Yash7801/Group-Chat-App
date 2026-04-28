@@ -33,25 +33,19 @@ function App() {
     });
   };
 
-  // LOGIN SCREEN
   if (!username) {
     return (
-      <div className="h-screen flex items-center justify-center bg-gradient-to-br from-[#0f1419] to-[#111827] text-white">
-        
-        <div className="w-full max-w-sm p-7 bg-[#1a1f2e] border border-gray-700 rounded-xl shadow-lg relative animate-fadeIn">
-          
-          {/* subtle edge highlight */}
-          <div className="absolute inset-0 rounded-xl pointer-events-none border border-white/5"></div>
+      <div className="h-screen flex items-center justify-center bg-[#0b111a] bg-gradient-to-br from-[#0f1419] to-[#111827] px-4">
+        <div className="max-w-sm w-full p-8 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg shadow-blue-600/30 relative animate-softEnter">
+          {/* Glassmorphic border highlight */}
+          <div className="absolute inset-0 rounded-2xl pointer-events-none border border-white/10"></div>
 
-          <h1 className="text-2xl font-semibold mb-2 tracking-tight">
-            Chat
-          </h1>
+          <h1 className="text-3xl font-extrabold mb-4 text-white select-none">Chat</h1>
 
-          <p className="text-sm text-gray-400 mb-4 leading-relaxed">
+          <p className="text-gray-300 mb-1 select-none">
             Enter your username to continue
           </p>
-
-          <p className="text-xs text-gray-500 mb-6">
+          <p className="text-gray-400 mb-6 text-sm select-none">
             Use a unique name (letters + numbers)
           </p>
 
@@ -66,35 +60,45 @@ function App() {
               if (e.key === "Enter") handleJoin();
             }}
             placeholder="Username"
-            className="w-full px-3 py-2.5 rounded-md bg-[#0c111b] border border-gray-600/80 text-white outline-none transition placeholder:text-gray-500 hover:border-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            className={`w-full px-4 py-3 rounded-xl bg-transparent border ${
+              error ? "border-red-500" : "border-gray-600"
+            } placeholder-gray-500 text-white outline-none 
+            focus:border-blue-500 focus:ring-1 focus:ring-blue-500 
+            shadow-inner transition duration-300`}
           />
 
           {error && (
-            <p className="mt-2 text-sm text-red-400">{error}</p>
+            <p className="mt-2 text-sm text-red-400 select-none">{error}</p>
           )}
 
           <button
             onClick={handleJoin}
             disabled={isConnecting}
-            className="mt-5 w-full py-2.5 rounded-md bg-blue-600 hover:bg-blue-500 active:bg-blue-700 transition disabled:opacity-50 font-medium shadow-md hover:shadow-blue-500/20"
+            className="mt-6 w-full py-3 rounded-full bg-gradient-to-r from-blue-500 to-blue-700 font-semibold text-white shadow-lg shadow-blue-700/50 hover:scale-105 hover:shadow-blue-900/70 transform transition duration-300 disabled:opacity-50 disabled:pointer-events-none flex justify-center items-center gap-2 select-none"
           >
             {isConnecting ? "Connecting..." : "Join Chat"}
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
           </button>
         </div>
       </div>
     );
   }
 
-  // CHAT SCREEN
   return (
     <div className="h-screen bg-gradient-to-br from-[#0f1419] to-[#111827] text-white flex items-center justify-center p-3">
       <div className="w-full max-w-6xl h-full border border-gray-700 bg-[#111] rounded-xl shadow-lg overflow-hidden animate-fadeIn">
-        
-        <Chat 
-          userId={username} 
-          initialOnlineUsers={initialOnlineUsers} 
-        />
-
+        <Chat userId={username} initialOnlineUsers={initialOnlineUsers} />
       </div>
     </div>
   );
